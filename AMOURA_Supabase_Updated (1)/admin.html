@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AMOURA | Store Admin</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .admin-page {
+            max-width: 1000px;
+            margin: 55px auto;
+            padding: 24px;
+        }
+
+        .admin-box {
+            background: #fff;
+            border: 1px solid #eadadd;
+            border-radius: 18px;
+            padding: 28px;
+            margin: 18px 0;
+        }
+
+        .admin-box h1,
+        .admin-box h2 {
+            font-family: 'Playfair Display', serif;
+            color: #8e5963;
+        }
+
+        .admin-box label {
+            display: block;
+            margin: 12px 0;
+        }
+
+        .admin-box input,
+        .admin-box textarea,
+        .admin-box select {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dfc6ca;
+            border-radius: 9px;
+            margin-top: 6px;
+            box-sizing: border-box;
+        }
+
+        .admin-box button {
+            padding: 11px 18px;
+            border: 0;
+            border-radius: 24px;
+            background: #bd8791;
+            color: white;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .admin-box button.secondary {
+            background: #eee1e2;
+            color: #69464d;
+        }
+
+        .admin-row {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 0;
+            border-bottom: 1px solid #f0e5e6;
+        }
+
+        .admin-row img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 9px;
+        }
+
+        .admin-muted {
+            color: #806d70;
+            font-size: 14px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .order-admin {
+            border: 1px solid #eadadd;
+            padding: 16px;
+            border-radius: 12px;
+            margin: 12px 0;
+        }
+
+        .status-select {
+            max-width: 220px;
+        }
+
+        @media (max-width: 600px) {
+            .admin-page {
+                margin: 20px auto;
+                padding: 12px;
+            }
+
+            .admin-box {
+                padding: 18px;
+            }
+
+            .admin-row {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <a class="brand" href="index.html">
+            AMOURA<span>♡</span>
+            <small>STORE MANAGEMENT</small>
+        </a>
+
+        <nav>
+            <a href="index.html">View shop</a>
+        </nav>
+    </header>
+
+    <main class="admin-page">
+
+        <section class="admin-box" id="loginPanel">
+            <p class="eyebrow">PRIVATE STORE ACCESS</p>
+
+            <h1>Welcome back</h1>
+
+            <p class="admin-muted">
+                Sign in using the admin account you created in Supabase Authentication.
+            </p>
+
+            <form id="loginForm">
+                <label>
+                    Email
+                    <input name="email" type="email" required autocomplete="username">
+                </label>
+
+                <label>
+                    Password
+                    <input name="password" type="password" required autocomplete="current-password">
+                </label>
+
+                <button type="submit">Sign in</button>
+            </form>
+
+            <p id="loginMessage" class="admin-muted"></p>
+        </section>
+
+        <section id="dashboard" class="hidden">
+
+            <div class="admin-box">
+                <div class="admin-row">
+                    <div>
+                        <p class="eyebrow">YOUR LITTLE BUSINESS HQ</p>
+                        <h1>AMOURA Store</h1>
+                        <p class="admin-muted" id="signedInAs"></p>
+                    </div>
+
+                    <button id="logoutBtn" class="secondary">Log out</button>
+                </div>
+            </div>
+
+            <div class="admin-box">
+                <h2 id="formHeading">Add a product</h2>
+
+                <form id="productForm">
+                    <input type="hidden" name="id">
+
+                    <label>
+                        Product name
+                        <input name="name" required maxlength="70">
+                    </label>
+
+                    <label>
+                        Price (₱)
+                        <input name="price" type="number" min="0" step="0.01" required>
+                    </label>
+
+                    <label>
+                        Description
+                        <textarea name="description" rows="3"></textarea>
+                    </label>
+
+                    <label>
+                        Product photo
+                        <input name="photo" type="file" accept="image/*">
+                    </label>
+
+                    <button type="submit" id="saveProductBtn">Save product</button>
+
+                    <button type="button" class="secondary" id="cancelEdit">
+                        Cancel edit
+                    </button>
+                </form>
+
+                <p id="productMessage" class="admin-muted"></p>
+            </div>
+
+            <div class="admin-box">
+                <h2>Your products</h2>
+                <div id="productList" class="admin-muted">Loading…</div>
+            </div>
+
+            <div class="admin-box">
+                <h2>Customer orders</h2>
+                <div id="ordersList" class="admin-muted">Loading…</div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="admin.js"></script>
+    <script>
+        el("loginForm").addEventListener("submit", async event => {
+            event.preventDefault();
+
+            const loginForm = event.currentTarget;
+
+            if (!sb) {
+                message("loginMessage", "Supabase is not configured. Check config.js.");
+                return;
+            }
+        });
+    </script>
+
+</body>
+</html>

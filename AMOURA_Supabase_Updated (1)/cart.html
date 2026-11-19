@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AMOURA | My Cart</title>
+
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: Arial, sans-serif;
+			background: #fff8fa;
+			color: #49383e;
+		}
+
+		header {
+			background: #f8dce5;
+			padding: 20px 6%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 15px;
+		}
+
+		.logo {
+			color: #a64f70;
+			font-size: 27px;
+			font-weight: bold;
+			letter-spacing: 3px;
+		}
+
+		nav {
+			display: flex;
+			gap: 18px;
+			flex-wrap: wrap;
+		}
+
+		nav a {
+			text-decoration: none;
+			color: #704653;
+			font-size: 14px;
+			font-weight: bold;
+		}
+
+		.container {
+			max-width: 950px;
+			margin: 45px auto;
+			padding: 0 20px;
+		}
+
+		h1 {
+			color: #a64f70;
+			text-align: center;
+			margin-bottom: 30px;
+		}
+
+		.cart-item {
+			display: flex;
+			align-items: center;
+			gap: 18px;
+			background: white;
+			padding: 15px;
+			border-radius: 12px;
+			margin-bottom: 15px;
+			box-shadow: 0 3px 12px rgba(120, 65, 85, 0.08);
+		}
+
+		.cart-item img {
+			width: 105px;
+			height: 105px;
+			object-fit: contain;
+			background: #f8e8ed;
+			border-radius: 8px;
+		}
+
+		.details {
+			flex: 1;
+		}
+
+		.details h3 {
+			color: #a64f70;
+			margin-bottom: 8px;
+		}
+
+		.details p {
+			margin-bottom: 8px;
+			font-size: 14px;
+		}
+
+		.quantity {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-top: 10px;
+		}
+
+		.quantity button {
+			width: 30px;
+			height: 30px;
+			border: none;
+			background: #f3d3df;
+			color: #80475c;
+			border-radius: 6px;
+			cursor: pointer;
+			font-size: 18px;
+		}
+
+		.remove-btn {
+			border: none;
+			background: none;
+			color: #c35b78;
+			cursor: pointer;
+			font-weight: bold;
+		}
+
+		.summary {
+			background: white;
+			padding: 25px;
+			border-radius: 12px;
+			margin-top: 25px;
+			box-shadow: 0 3px 12px rgba(120, 65, 85, 0.08);
+		}
+
+		.total {
+			display: flex;
+			justify-content: space-between;
+			font-size: 21px;
+			font-weight: bold;
+			color: #a64f70;
+			margin-bottom: 20px;
+		}
+
+		.checkout-btn, .continue-btn {
+			display: block;
+			width: 100%;
+			padding: 14px;
+			text-align: center;
+			text-decoration: none;
+			border: none;
+			border-radius: 8px;
+			cursor: pointer;
+			font-weight: bold;
+			margin-top: 12px;
+			font-size: 15px;
+		}
+
+		.checkout-btn {
+			background: #d98ba8;
+			color: white;
+		}
+
+		.continue-btn {
+			background: #f6e5eb;
+			color: #9e4e6c;
+		}
+
+		.empty {
+			text-align: center;
+			padding: 45px 15px;
+			background: white;
+			border-radius: 12px;
+			color: #92747e;
+		}
+
+		footer {
+			background: #f8dce5;
+			text-align: center;
+			padding: 22px;
+			color: #704653;
+			font-size: 13px;
+			margin-top: 60px;
+		}
+
+		@media (max-width: 600px) {
+			header {
+				justify-content: center;
+			}
+
+			nav {
+				justify-content: center;
+			}
+
+			.cart-item {
+				align-items: flex-start;
+				gap: 12px;
+			}
+
+			.cart-item img {
+				width: 85px;
+				height: 85px;
+			}
+
+			.remove-btn {
+				font-size: 12px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+<header>
+	<div class="logo">AMOURA</div>
+
+	<nav>
+		<a href="index.html">Home</a>
+		<a href="products.html">Shop</a>
+		<a href="collections.html">Collections</a>
+		<a href="cart.html">My Cart</a>
+	</nav>
+</header>
+
+<main class="container">
+	<h1>My Shopping Cart ♡</h1>
+
+	<div id="cartItems"></div>
+
+	<div id="cartSummary" class="summary" hidden>
+		<div class="total">
+			<span>Total:</span>
+			<span id="cartTotal">₱0.00</span>
+		</div>
+
+		<a href="billing.html" class="checkout-btn">
+			Proceed to Checkout ♡
+		</a>
+
+		<a href="products.html" class="continue-btn">
+			Continue Shopping
+		</a>
+	</div>
+</main>
+
+<footer>
+	© 2026 AMOURA — Handmade with Love ♡
+</footer>
+
+<script>
+	const cartItems = document.getElementById("cartItems");
+	const cartSummary = document.getElementById("cartSummary");
+	const cartTotal = document.getElementById("cartTotal");
+
+	function getCart() {
+		try {
+			return JSON.parse(localStorage.getItem("amouraCart") || "[]");
+		} catch {
+			return [];
+		}
+	}
+
+	function saveCart(cart) {
+		localStorage.setItem("amouraCart", JSON.stringify(cart));
+		displayCart();
+	}
+
+	function displayCart() {
+		const cart = getCart();
+
+		if (cart.length === 0) {
+			cartItems.innerHTML = `
+				<div class="empty">
+					<h2>Your cart is empty ♡</h2>
+					<p>You haven't added any crochet pieces yet.</p>
+					<br>
+					<a href="products.html" class="continue-btn">
+						Explore Our Products
+					</a>
+				</div>
+			`;
+
+			cartSummary.hidden = true;
+			return;
+		}
+
+		cartSummary.hidden = false;
+
+		cartItems.innerHTML = cart.map((item, index) => `
+			<div class="cart-item">
+				<img
+					src="${escapeHTML(item.image_url || "")}" 
+					alt="${escapeHTML(item.name)}"
+				>
+
+				<div class="details">
+					<h3>${escapeHTML(item.name)}</h3>
+					<p>₱${Number(item.price).toFixed(2)}</p>
+
+					<div class="quantity">
+						<button onclick="changeQuantity(${index}, -1)">−</button>
+						<span>${item.quantity}</span>
+						<button onclick="changeQuantity(${index}, 1)">+</button>
+					</div>
+
+					<p><strong>Subtotal: ₱${(Number(item.price) * item.quantity).toFixed(2)}</strong></p>
+				</div>
+
+				<button class="remove-btn" onclick="removeItem(${index})">
+					Remove
+				</button>
+			</div>
+		`).join("");
+
+		const total = cart.reduce(
+			(sum, item) => sum + Number(item.price) * item.quantity,
+			0
+		);
+
+		cartTotal.textContent = "₱" + total.toFixed(2);
+	}
+
+	function changeQuantity(index, amount) {
+		const cart = getCart();
+
+		if (!cart[index]) return;
+
+		cart[index].quantity += amount;
+
+		if (cart[index].quantity <= 0) {
+			cart.splice(index, 1);
+		}
+
+		saveCart(cart);
+	}
+
+	function removeItem(index) {
+		const cart = getCart();
+		cart.splice(index, 1);
+		saveCart(cart);
+	}
+
+	function escapeHTML(value) {
+		return String(value ?? "").replace(/[&<>"']/g, character => ({
+			"&": "&amp;",
+			"<": "&lt;",
+			">": "&gt;",
+			'"': "&quot;",
+			"'": "&#39;"
+		})[character]);
+	}
+
+	displayCart();
+</script>
+
+</body>
+</html>

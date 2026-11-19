@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8e8e9">
+  <title>AMOURA | Handmade with love — Version 3.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&family=Quicksand:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="AMOURA home">AMOURA<span>♡</span><small>HANDMADE WITH LOVE</small></a>
+    
+<nav>
+  <a href="index.html">Home</a>
+  <a href="products.html">Shop</a>
+  <a href="collections.html">Collections</a>
+  <a href="cart.html">My Cart</a>
+</nav>
+
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <p class="eyebrow">THOUGHTFULLY MADE • BEAUTIFULLY YOURS</p>
+        <h1>Little things,<br><em>made with love.</em></h1>
+        <p class="hero-text">Discover handmade pieces created with care, creativity, and a little bit of magic.</p>
+        <a class="primary-link" href="#shop">EXPLORE THE COLLECTION <span>↗</span></a>
+      </div>
+      <div class="hero-art" aria-label="Decorative pink and beige shapes">
+        <div class="art-circle"></div><div class="art-card"><span>AMOURA</span><b>made<br>by hand</b><i>♡</i></div>
+        <span class="art-note">one of a kind · just for you</span>
+      </div>
+    </section>
+
+    <section class="shop-section section-wrap" id="shop">
+      <div class="section-heading">
+        <div><p class="eyebrow">THE AMOURA EDIT</p><h2>Our collection</h2></div>
+        <p>Handmade favorites, made to make you smile.</p>
+      </div>
+      <div class="shop-tools" aria-label="Product filters">
+        <label class="search-field"><span>Search the collection</span><input id="productSearch" type="search" placeholder="Search crochet pieces..." autocomplete="off"></label>
+        <label class="sort-field"><span>Sort by</span><select id="productSort"><option value="featured">Featured</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="name">Name: A to Z</option></select></label>
+      </div>
+      <p class="results-note" id="resultsNote" aria-live="polite"></p>
+      <div class="product-grid" id="productGrid"></div>
+      <p class="empty-message" id="emptyProducts" hidden>No products yet. Add your first product in Manage Store.</p>
+    </section>
+
+    <section class="pinboard-section section-wrap" id="pinboard" hidden>
+      <div class="section-heading">
+        <div><p class="eyebrow">A LITTLE INSPIRATION</p><h2>Our design board</h2></div>
+        <p>A collection of ideas and designs from AMOURA.</p>
+      </div>
+      <div class="pinboard-grid" id="pinboardGrid"></div>
+    </section>
+
+    <section class="cart-section section-wrap" id="cart">
+      <div class="section-heading"><div><p class="eyebrow">YOUR PICKS</p><h2>Your shopping cart</h2></div></div>
+      <div id="cartItems" class="cart-items"><p class="muted">Your cart is waiting for something lovely.</p></div>
+      <div class="cart-summary"><strong>Total <span id="cartTotal">₱0.00</span></strong></div>
+      <form id="checkoutForm" class="checkout-form">
+        <h3>Delivery details</h3>
+        <div class="form-grid">
+          <label>Full name<input name="customerName" required placeholder="Your full name"></label>
+          <label>Contact number<input name="phone" required type="tel" placeholder="09XXXXXXXXX"></label>
+          <label class="full">Email (optional)<input name="email" type="email" placeholder="you@example.com"></label>
+          <label class="full">Complete delivery address<textarea name="address" required rows="3" placeholder="House number, street, barangay, city / province"></textarea></label>
+          <label class="full">Order notes (optional)<textarea name="notes" rows="2" placeholder="Color, size, or other requests"></textarea></label>
+        </div>
+        <button class="primary-button" type="submit">Place order</button>
+        <p class="tiny-note">Your order will be securely sent to AMOURA. We will contact you with updates.</p>
+      </form>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <p class="eyebrow">LET'S KEEP IN TOUCH</p><h2>A little note from you?</h2>
+      <p>Questions about a handmade piece or a custom order? We'd love to hear from you.</p>
+      <div id="contactNumbers" class="contact-numbers"></div>
+    </section>
+  </main>
+
+  <footer><a class="footer-brand" href="#home">AMOURA ♡</a><p>Handmade with love, just for you.</p><small>© <span id="year"></span> AMOURA. All rights reserved.</small></footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AMOURA | Shop</title>
+
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+	<script src="config.js"></script>
+
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: Arial, sans-serif;
+			background: #fff8fa;
+			color: #49383e;
+		}
+
+		header {
+			background: #f8dce5;
+			padding: 20px 6%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 15px;
+		}
+
+		.logo {
+			color: #a64f70;
+			font-size: 27px;
+			font-weight: bold;
+			letter-spacing: 3px;
+		}
+
+		nav {
+			display: flex;
+			gap: 18px;
+			flex-wrap: wrap;
+		}
+
+		nav a {
+			text-decoration: none;
+			color: #704653;
+			font-size: 14px;
+			font-weight: bold;
+		}
+
+		nav a:hover {
+			color: #c05d83;
+		}
+
+		.heading {
+			text-align: center;
+			padding: 45px 15px 25px;
+		}
+
+		.heading h1 {
+			color: #a64f70;
+			font-size: 32px;
+			margin-bottom: 10px;
+		}
+
+		.heading p {
+			color: #92747e;
+		}
+
+		.product-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+			gap: 25px;
+			padding: 20px 6% 60px;
+			max-width: 1300px;
+			margin: auto;
+		}
+
+		.product-card {
+			background: white;
+			border-radius: 14px;
+			overflow: hidden;
+			box-shadow: 0 4px 15px rgba(120, 65, 85, 0.09);
+			padding-bottom: 20px;
+		}
+
+		.product-image {
+			height: 300px;
+			background: #f8e8ed;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			overflow: hidden;
+		}
+
+		.product-image img {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+		}
+
+		.product-info {
+			padding: 17px;
+		}
+
+		.product-info h3 {
+			color: #9e4e6c;
+			margin-bottom: 8px;
+		}
+
+		.description {
+			font-size: 13px;
+			color: #88747b;
+			min-height: 38px;
+			line-height: 1.5;
+		}
+
+		.price {
+			color: #a64f70;
+			font-size: 19px;
+			font-weight: bold;
+			margin: 13px 0;
+		}
+
+		.add-btn {
+			width: 100%;
+			border: none;
+			background: #d98ba8;
+			color: white;
+			padding: 12px;
+			border-radius: 8px;
+			cursor: pointer;
+			font-weight: bold;
+		}
+
+		.add-btn:hover {
+			background: #bd6688;
+		}
+
+		#message {
+			text-align: center;
+			padding: 25px;
+			color: #a64f70;
+		}
+
+		footer {
+			background: #f8dce5;
+			text-align: center;
+			padding: 22px;
+			color: #704653;
+			font-size: 13px;
+		}
+
+		@media (max-width: 600px) {
+			header {
+				justify-content: center;
+				text-align: center;
+			}
+
+			nav {
+				justify-content: center;
+			}
+
+			.product-grid {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 12px;
+				padding: 15px;
+			}
+
+			.product-image {
+				height: 210px;
+			}
+
+			.product-info {
+				padding: 12px;
+			}
+
+			.heading h1 {
+				font-size: 26px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<header>
+		<div class="logo">AMOURA</div>
+
+		<nav>
+			<a href="index.html">Home</a>
+			<a href="products.html">Shop</a>
+			<a href="collections.html">Collections</a>
+			<a href="cart.html">My Cart</a>
+		</nav>
+	</header>
+
+	<section class="heading">
+		<h1>Our Crochet Collection</h1>
+		<p>Handmade with love, made just for you ♡</p>
+	</section>
+
+	<p id="message">Loading our lovely products...</p>
+
+	<main class="product-grid" id="productGrid"></main>
+
+	<footer>
+		© 2026 AMOURA — Handmade with Love ♡
+	</footer>
+
+	<script>
+		const productGrid = document.getElementById("productGrid");
+		const message = document.getElementById("message");
+
+		const supabaseUrl = window.AMOURA_SUPABASE_URL;
+		const supabaseKey = window.AMOURA_SUPABASE_PUBLISHABLE_KEY;
+		let db;
+
+		if (!supabaseUrl || !supabaseKey) {
+			message.textContent = "Supabase configuration is missing. Please check config.js.";
+		} else {
+			db = window.supabase.createClient(
+				supabaseUrl,
+				supabaseKey
+			);
+
+			loadProducts();
+		}
+
+		async function loadProducts() {
+			const { data, error } = await db
+				.from("products")
+				.select("*")
+				.order("created_at", { ascending: false });
+
+			if (error) {
+				console.error(error);
+				message.textContent = "Unable to load products. Please try again.";
+				return;
+			}
+
+			if (!data || data.length === 0) {
+				message.textContent = "No products available yet.";
+				return;
+			}
+
+			message.textContent = "";
+
+			productGrid.innerHTML = data.map(product => `
+				<article class="product-card">
+					<div class="product-image">
+						${
+							product.image_url
+								? `<img src="${escapeHTML(product.image_url)}" alt="${escapeHTML(product.name)}">`
+								: "♡"
+						}
+					</div>
+
+					<div class="product-info">
+						<h3>${escapeHTML(product.name)}</h3>
+						<p class="description">${escapeHTML(product.description || "")}</p>
+						<p class="price">₱${Number(product.price).toFixed(2)}</p>
+
+						<button class="add-btn"
+							onclick="addToCart('${escapeHTML(product.id)}')">
+							Add to Cart ♡
+						</button>
+					</div>
+				</article>
+			`).join("");
+
+			window.products = data;
+		}
+
+		function escapeHTML(value) {
+			return String(value ?? "").replace(/[&<>"']/g, character => ({
+				"&": "&amp;",
+				"<": "&lt;",
+				">": "&gt;",
+				'"': "&quot;",
+				"'": "&#39;"
+			})[character]);
+		}
+
+		function addToCart(productId) {
+			const product = window.products.find(
+				item => String(item.id) === String(productId)
+			);
+
+			if (!product) return;
+
+			let cart = JSON.parse(
+				localStorage.getItem("amouraCart") || "[]"
+			);
+
+			const existing = cart.find(
+				item => String(item.id) === String(product.id)
+			);
+
+			if (existing) {
+				existing.quantity += 1;
+			} else {
+				cart.push({
+					id: product.id,
+					name: product.name,
+					price: Number(product.price),
+					image_url: product.image_url || "",
+					quantity: 1
+				});
+			}
+
+			localStorage.setItem("amouraCart", JSON.stringify(cart));
+
+			alert(product.name + " added to your cart! ♡");
+		}
+	</script>
+
+</body>
+</html>

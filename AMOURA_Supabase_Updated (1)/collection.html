@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMOURA | Collections</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff8fa;
+      color: #49383e;
+    }
+
+    header {
+      background: #f8dce5;
+      padding: 20px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .logo {
+      color: #a64f70;
+      font-size: 27px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #704653;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #c05d83;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 65px 20px;
+      background: linear-gradient(135deg, #f9e1e9, #fff4f6);
+    }
+
+    .hero h1 {
+      color: #a64f70;
+      font-size: 38px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      color: #92747e;
+      line-height: 1.7;
+    }
+
+    .section {
+      max-width: 1150px;
+      margin: 55px auto;
+      padding: 0 20px;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .section-heading h2 {
+      color: #a64f70;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .section-heading p {
+      color: #92747e;
+    }
+
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .collection-card {
+      background: white;
+      border-radius: 15px;
+      padding: 35px 22px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(120, 65, 85, 0.08);
+    }
+
+    .collection-icon {
+      width: 85px;
+      height: 85px;
+      border-radius: 50%;
+      background: #f9e2ea;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 20px;
+      font-size: 38px;
+    }
+
+    .collection-card h3 {
+      color: #a64f70;
+      margin-bottom: 12px;
+    }
+
+    .collection-card p {
+      color: #92747e;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 65px;
+    }
+
+    .collection-card a {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 11px 22px;
+      background: #d98ba8;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .collection-card a:hover {
+      background: #bd6688;
+    }
+
+    .inspiration {
+      background: #f8dce5;
+      padding: 50px 20px;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .inspiration h2 {
+      color: #a64f70;
+      font-size: 27px;
+      margin-bottom: 12px;
+    }
+
+    .inspiration p {
+      color: #704653;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .shop-btn {
+      display: inline-block;
+      background: #a64f70;
+      color: white;
+      padding: 13px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer {
+      background: #f8dce5;
+      text-align: center;
+      padding: 22px;
+      color: #704653;
+      font-size: 13px;
+    }
+
+    @media (max-width: 750px) {
+      .collection-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      header {
+        justify-content: center;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      .hero h1 {
+        font-size: 29px;
+      }
+
+      .collection-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">AMOURA</div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="products.html">Shop</a>
+    <a href="collections.html">Collections</a>
+    <a href="cart.html">My Cart</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Our Lovely Collections ♡</h1>
+  <p>
+    Little handmade pieces, made with love and creativity.
+    <br>
+    Discover your next favorite crochet design.
+  </p>
+</section>
+
+<section class="section">
+  <div class="section-heading">
+    <h2>Explore Our Collections</h2>
+    <p>Find a design that matches your style.</p>
+  </div>
+
+  <div class="collection-grid">
+
+    <article class="collection-card">
+      <div class="collection-icon">🌸</div>
+      <h3>Floral Collection</h3>
+      <p>Sweet flower-inspired crochet pieces with a soft and lovely look.</p>
+      <a href="products.html">Explore Designs</a>
+    </article>
+
+    <article class="collection-card">
+      <div class="collection-icon">🎀</div>
+      <h3>Coquette Collection</h3>
+      <p>Feminine, playful, and pretty designs for your cute aesthetic.</p>
+      <a href="products.html">Explore Designs</a>
+    </article>
+
+    <article class="collection-card">
+      <div class="collection-icon">🩵</div>
+      <h3>Ocean Collection</h3>
+      <p>Fresh colors and dreamy crochet styles inspired by the ocean.</p>
+      <a href="products.html">Explore Designs</a>
+    </article>
+
+    <article class="collection-card">
+      <div class="collection-icon">💗</div>
+      <h3>Pink Collection</h3>
+      <p>Pretty pink creations for everyone who loves a little sweetness.</p>
+      <a href="products.html">Explore Designs</a>
+    </article>
+
+    <article class="collection-card">
+      <div class="collection-icon">✨</div>
+      <h3>Special Designs</h3>
+      <p>Unique handmade pieces that make your style stand out.</p>
+      <a href="products.html">Explore Designs</a>
+    </article>
+
+    <article class="collection-card">
+      <div class="collection-icon">🧶</div>
+      <h3>All Handmade</h3>
+      <p>Explore our crochet creations, carefully made stitch by stitch.</p>
+      <a href="products.html">Shop All</a>
+    </article>
+
+  </div>
+</section>
+
+<section class="inspiration">
+  <h2>Made with Love, Just for You ♡</h2>
+  <p>
+    Every AMOURA piece is handmade with care.
+    Find something special and make it yours.
+  </p>
+  <a href="products.html" class="shop-btn">Shop AMOURA</a>
+</section>
+
+<footer>
+  © 2026 AMOURA — Handmade with Love ♡
+</footer>
+
+</body>
+</html>
