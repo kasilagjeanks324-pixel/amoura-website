@@ -29,6 +29,13 @@ const safe = value =>
   })[char]);
 
 let sb = null;
+
+if (isConfigReady() && window.supabase?.createClient) {
+  sb = window.supabase.createClient(
+    window.AMOURA_SUPABASE_URL,
+    window.AMOURA_SUPABASE_PUBLISHABLE_KEY
+  );
+}
 let currentProducts = [];
 
 function message(id, text) {
